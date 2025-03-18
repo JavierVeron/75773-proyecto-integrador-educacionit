@@ -1,0 +1,90 @@
+[
+    {
+        "id": 1,
+        "nombre": "Remera Boxy Zac Negra",
+        "precio": 27990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "remeras-lisas",
+        "detalles": "Remera corte boxy lisa escote redondo- Tela algodón.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/REMERA_BOXY_ZAC_NEGRA_1.jpg?v=1741373619&width=700",
+        "envio": false
+    },
+    {
+        "id": 2,
+        "nombre": "Remera Boxy Zac Blanca",
+        "precio": 27990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "remeras-lisas",
+        "detalles": "Remera corte boxy lisa escote redondo- Tela algodón.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/Blanca1_26d93459-0a67-4142-818b-7e549ce82ea8.jpg?v=1741373621&width=700",
+        "envio": true
+    },
+    {
+        "id": 3,
+        "nombre": "Remera Boxy Zac Militar",
+        "precio": 27990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "remeras-lisas",
+        "detalles": "Remera corte boxy lisa escote redondo- Tela algodón.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/REMERA_BOXY_ZAC_MILITAR_1.jpg?v=1741373620&width=700",
+        "envio": false
+    },
+    {
+        "id": 4,
+        "nombre": "Remera Over Taz Michi Negra",
+        "precio": 29990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "remeras-estampadas",
+        "detalles": "Remera corte over-size lisa con estampa - Tela algodón.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/MichiNegra6.jpg?v=1741372941&width=700",
+        "envio": true
+    },
+    {
+        "id": 5,
+        "nombre": "Remera Over Rhy 80s Blanca",
+        "precio": 29990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "remeras-estampadas",
+        "detalles": "Remera corte over-size lisa con estampa - Tela algodón.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/80sBlanca5.jpg?v=1741373123&width=700",
+        "envio": false
+    },
+    {
+        "id": 6,
+        "nombre": "Remera Over GR Orbita Crudo",
+        "precio": 59990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "remeras-estampadas",
+        "detalles": "Remera de algodon pesado premium. Con logo bordado en delantero y parche estampado en la espalda.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/OrbitaCrudo1.jpg?v=1741372957&width=700",
+        "envio": true
+    },
+    {
+        "id": 7,
+        "nombre": "Pantalón Gervin Crudo",
+        "precio": 64990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "jeans",
+        "detalles": "Pantalon Regular Fit. Tela: Gabardina.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/CRUDO_1_1.jpg?v=1741374650&width=700",
+        "envio": true
+    },
+    {
+        "id": 8,
+        "nombre": "Jean Mom Shelby Negro",
+        "precio": 59990,
+        "stock": 10,
+        "marca": "VCP",
+        "categoria": "jeans",
+        "detalles": "Jean corte mom over-size.",
+        "foto": "https://vcp.com.ar/cdn/shop/files/JEAN_SHELBY_NEGRO_1.jpg?v=1741374642&width=700",
+        "envio": false
+    }
+]
