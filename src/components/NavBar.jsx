@@ -4,7 +4,7 @@ const NavBar = () => {
     return (
         <ul className="nav">
             <li className="nav-item">
-                <Link to={"/"} className="nav-link text-dark text-uppercase fw-light">Productos</Link>
+                <Link to={"/"} className="nav-link text-dark text-uppercase fw-light">Catálogo</Link>
             </li>
             <li className="nav-item">
                 <Link to={"/categoria/remeras-lisas"} className="nav-link text-dark text-uppercase fw-light">Remeras Lisas</Link>
@@ -14,6 +14,12 @@ const NavBar = () => {
             </li>
             <li className="nav-item">
                 <Link to={"/categoria/jeans"} className="nav-link text-dark text-uppercase fw-light">Jeans</Link>
+            </li>
+            <li className="nav-item">
+                <Link to={"/alta"} className="nav-link text-dark text-uppercase fw-light">Alta</Link>
+            </li>
+            <li className="nav-item">
+                <Link to={"/carrito"} className="nav-link text-dark text-uppercase fw-light">Carrito</Link>
             </li>
         </ul>
     )
