@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import productosJson from "../assets/productos.json"
+import { EcommerceContext } from "./context/EcommerceContext";
 
 const Alta = () => {
+    const {obtenerProductos, agregarProductoContext, editarProductoContext, eliminarProductoContext} = useContext(EcommerceContext);
+    const [productos, setProductos] = useState(obtenerProductos());
     const [nombre, setNombre] = useState("Remera GB Evolution Negra");
     const [precio, setPrecio] = useState(29990);
     const [stock, setStock] = useState(20);
@@ -11,19 +14,25 @@ const Alta = () => {
     const [foto, setFoto] = useState("https://vcp.com.ar/cdn/shop/files/EvolutionNegra5.jpg?v=1741373316&width=700");
     const [envio, setEnvio] = useState(true);
     const [formCompleto, setFormCompleto] = useState(false);
-    const [productos, setProductos] = useState(productosJson);
     const [hayProductos, setHayProductos] = useState(productos.length > 0 ? true : false);
     const [edicion, setEdicion] = useState(false);
     const [idSeleccionado, setIdSeleccionado] = useState(0);
 
-    const generarId = () => {
-        return (productos.length + 1);
+    const vaciarFormulario = () => {
+        setNombre("");
+        setPrecio("");
+        setStock("");
+        setMarca("");
+        setCategoria("");
+        setDetalles("");
+        setFoto("");
+        setEnvio("");
     }
 
     const guardarProducto = () => {
-        const producto = {id:generarId(), nombre:nombre, precio:precio, stock:stock, marca:marca, categoria:categoria, detalles:detalles, foto:foto, envio:(envio == 1 ? true : false)}; 
-        setProductos([...productos, producto]);
-        console.log("El producto se guardó correctamente!");
+        const producto = {nombre:nombre, precio:precio, stock:stock, marca:marca, categoria:categoria, detalles:detalles, foto:foto, envio:(envio == 1 ? true : false)};
+        agregarProductoContext(producto);
+        vaciarFormulario();
     }
 
     const edicionProducto = (id) => {
@@ -41,40 +50,25 @@ const Alta = () => {
         setEnvio(producto.envio);
     }
 
-    const editarProducto = () => {        
-        const producto = productos.find(item => item.id == idSeleccionado);
-        producto.nombre = nombre;
-        producto.precio = precio;
-        producto.stock = stock;
-        producto.marca = marca;
-        producto.categoria = categoria;
-        producto.detalles = detalles;
-        producto.foto = foto;
-        producto.envio = envio;
-        setProductos([...productos]);
+    const editarProducto = () => {
+        const producto = {nombre:nombre, precio:precio, stock:stock, marca:marca, categoria:categoria, detalles:detalles, foto:foto, envio:(envio == 1 ? true : false)};
+        editarProductoContext(idSeleccionado, producto);
         desseleccionarProducto(idSeleccionado);
         setEdicion(false);
+        vaciarFormulario();
     }
 
     const cancelarEdicion = () => {
         desseleccionarProducto(idSeleccionado);
         setEdicion(false);
-        setNombre("");
-        setPrecio("");
-        setStock("");
-        setMarca("");
-        setCategoria("");
-        setDetalles("");
-        setFoto("");
-        setEnvio("");
+        vaciarFormulario();
     }
 
     const eliminarProducto = (id) => {
         const response = confirm("Desea eliminar el Producto: #" + id);
 
         if (response) {
-            const productosActualizados = productos.filter(item => item.id != id);
-            setProductos([...productosActualizados]);
+            eliminarProductoContext(id);
         }
     }
 
@@ -102,9 +96,14 @@ const Alta = () => {
         setFormCompleto((nombre && precio && stock && marca && categoria && detalles && foto != "") ? true : false);
     }
 
+    const seleccionarEnvio = () => {
+        setEnvio(envio ? false : true);
+    }
+
     useEffect(() => {
         validarProductos();
         validarForm();
+        setProductos(obtenerProductos());
     })
 
     return (
@@ -149,7 +148,7 @@ const Alta = () => {
                             <input type="text" className="form-control" value={foto} onInput={(e)=>{setNombre(e.target.value)}} />
                         </div>
                         <div className="mb-3 form-check">
-                            <input type="checkbox" className="form-check-input" checked={envio ? "checked" : ""} onChange={(e) => {setEnvio(e.target.value)}} />
+                            <input type="checkbox" className="form-check-input" value={envio} checked={envio ? "checked" : ""} onChange={seleccionarEnvio} />
                             <label className="form-check-label">Envío Gratis</label>
                         </div>
                         {edicion ? <><button type="button" className="btn btn-dark me-1" onClick={editarProducto}>Editar</button><button type="button" className="btn btn-dark" onClick={cancelarEdicion}>Cancelar</button></> : <button type="button" className="btn btn-dark" onClick={guardarProducto}>Guardar</button>}

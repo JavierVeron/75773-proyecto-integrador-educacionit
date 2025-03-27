@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react"
-import productos from "../assets/productos.json"
+import { useContext, useState, useEffect } from "react"
+import { EcommerceContext } from "./context/EcommerceContext";
 
 const CarritoDeCompras = () => {
-    const [carrito, setCarrito] = useState([]);
+    const {obtenerCarrito, eliminarProductoCarrito, cantidadProductosCarrito, sumaProductosCarrito, vaciarCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito} = useContext(EcommerceContext);
+    const [carrito, setCarrito] = useState(obtenerCarrito());
 
     useEffect(() => {
-        const producto1 = productos.find(item => item.id == 1);
-        const producto2 = productos.find(item => item.id == 2);
-        setCarrito([producto1, producto2]);
-    }, [])
+        setCarrito(obtenerCarrito());
+    })
 
-    if (carrito.length == 0) {
+    if (cantidadProductosCarrito() == 0) {
         return (
             <div className="container my-5">
                 <div className="row">
@@ -28,17 +27,32 @@ const CarritoDeCompras = () => {
                 <div className="col">
                     <table className="table">
                         <tbody>
-                        {
-                            carrito.map(item => (
-                                <tr key={item.id}>
-                                    <td><img src={item.foto} alt={item.nombre} width={60} /></td>
-                                    <td className="align-middle fw-light">{item.nombre}</td>
-                                    <td className="align-middle fw-light">${item.precio}</td>
-                                    <td className="align-middle fw-light">x2</td>
-                                    <td className="align-middle fw-light">${item.precio * 2}</td>
-                                </tr>
-                            ))
-                        }
+                            <tr>
+                                <td className="text-end" colSpan={6}><button className="btn btn-dark btn-sm" onClick={vaciarCarrito}>Vaciar Carrito</button></td>
+                            </tr>
+                            {
+                                carrito.map(item => (
+                                    <tr key={item.id}>
+                                        <td><img src={item.foto} alt={item.nombre} width={60} /></td>
+                                        <td className="align-middle fw-light">{item.nombre}</td>
+                                        <td className="align-middle fw-light">${item.precio}</td>
+                                        <td className="align-middle fw-light">
+                                            <div className="btn-group" role="group">
+                                                <button type="button" className="btn btn-outline-dark" onClick={() => {decrementarItemProductoCarrito(item.id)}}>-</button>
+                                                <button type="button" className="btn btn-outline-dark">{item.cantidad}</button>
+                                                <button type="button" className="btn btn-outline-dark" onClick={() => {incrementarItemProductoCarrito(item.id)}}>+</button>
+                                            </div>
+                                        </td>
+                                        <td className="align-middle fw-light">${item.precio * item.cantidad}</td>
+                                        <td className="align-middle text-end"><button className="btn btn-dark btn-sm" onClick={() => {eliminarProductoCarrito(item.id)}}>Eliminar</button></td>
+                                    </tr>
+                                ))
+                            }
+                            <tr>
+                                <td className="align-middle text-center fw-light" colSpan={4}>Suma Total</td>
+                                <td className="align-middle fw-light">${sumaProductosCarrito()}</td>
+                                <td className="align-middle text-end"><button className="btn btn-dark btn-sm">Checkout</button></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

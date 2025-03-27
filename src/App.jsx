@@ -4,20 +4,23 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Carrito from "./components/Carrito"
 import Alta from "./components/Alta"
+import EcommerceContextProvider from "./components/context/EcommerceContext"
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path={"/"} element={<Catalogo />} />
-          <Route path={"/categoria/:id"} element={<Catalogo />} />
-          <Route path={"/alta"} element={<Alta />} />
-          <Route path={"/carrito"} element={<Carrito />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <EcommerceContextProvider>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path={"/"} element={<Catalogo />} />
+            <Route path={"/categoria/:id"} element={<Catalogo />} />
+            <Route path={"/alta"} element={<Alta />} />
+            <Route path={"/carrito"} element={<Carrito />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </EcommerceContextProvider>
     </>
   )
 }
