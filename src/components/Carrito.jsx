@@ -1,13 +1,22 @@
-import { useContext, useState, useEffect } from "react"
+import { useContext, useState } from "react"
 import { EcommerceContext } from "./context/EcommerceContext";
+import mockAPI from "./mockAPI";
 
 const CarritoDeCompras = () => {
-    const {obtenerCarrito, eliminarProductoCarrito, cantidadProductosCarrito, sumaProductosCarrito, vaciarCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito} = useContext(EcommerceContext);
-    const [carrito, setCarrito] = useState(obtenerCarrito());
+    const {carrito, eliminarProductoCarrito, cantidadProductosCarrito, sumaProductosCarrito, vaciarCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito} = useContext(EcommerceContext);
+    const [idPedido, setIdPedido] = useState(0);
 
-    useEffect(() => {
-        setCarrito(obtenerCarrito());
-    })
+    if (idPedido > 0) {
+        return (
+            <div className="container my-5">
+                <div className="row">
+                    <div className="col">
+                        <h1 className="text-center fw-light">Gracias por tu Compra! Tu Pedido es el <b>#{idPedido}</b></h1>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     if (cantidadProductosCarrito() == 0) {
         return (
@@ -19,6 +28,16 @@ const CarritoDeCompras = () => {
                 </div>
             </div>
         )
+    }
+
+    const guardarPedido = async () => {
+        const items = carrito.map(item => ({id:item.id, nombre:item.nombre, precio:item.precio, cantidad:item.cantidad}));
+        const fechaActual = new Date();
+        const fecha = `${fechaActual.getDate()}-${fechaActual.getMonth() + 1}-${fechaActual.getFullYear()} ${fechaActual.getHours()}:${fechaActual.getMinutes()}`; 
+        const pedido = {items:items, total:sumaProductosCarrito(), fecha:fecha};
+        const response = await mockAPI.post("/pedidos", pedido);
+        setIdPedido(response.data.id);
+        vaciarCarrito();
     }
 
     return (
@@ -51,7 +70,7 @@ const CarritoDeCompras = () => {
                             <tr>
                                 <td className="align-middle text-center fw-light" colSpan={4}>Suma Total</td>
                                 <td className="align-middle fw-light">${sumaProductosCarrito()}</td>
-                                <td className="align-middle text-end"><button className="btn btn-dark btn-sm">Checkout</button></td>
+                                <td className="align-middle text-end"><button className="btn btn-dark btn-sm" onClick={guardarPedido}>Checkout</button></td>
                             </tr>
                         </tbody>
                     </table>

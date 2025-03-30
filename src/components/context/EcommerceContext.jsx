@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import mockAPI from "../mockAPI";
 
 export const EcommerceContext = createContext();
@@ -6,17 +6,15 @@ export const EcommerceContext = createContext();
 const EcommerceContextProvider = ({children}) => {
     const [productos, setProductos] = useState([]);
     const [carrito, setCarrito] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const obtenerProductos = () => {
-        if (cantidadProductosCarrito() == 0) {
-            (async () => {
-                const response = await mockAPI.get("/productos");            
-                setProductos(response.data);
-            })();
-        }
-
-        return productos;
-    }
+    useEffect(() => {
+        (async () => {
+            const response = await mockAPI.get("/productos");            
+            setProductos(response.data);
+            setLoading(false);
+        })();
+    }, [])
 
     const agregarProductoContext = (producto) => {
         const id = generarId();
@@ -43,10 +41,6 @@ const EcommerceContextProvider = ({children}) => {
         const productosActualizados = productos.filter(item => item.id != id);
         setProductos([...productosActualizados]);
         console.log("El Producto #" + id + " se eliminó correctamente!");
-    }
-
-    const obtenerCarrito = () => {
-        return carrito;
     }
 
     const estaEnElCarrito = (id) => {
@@ -105,7 +99,7 @@ const EcommerceContextProvider = ({children}) => {
         }
     }
 
-    return <EcommerceContext.Provider value={{obtenerProductos, agregarProductoContext, editarProductoContext, eliminarProductoContext, obtenerCarrito, agregarProductoAlCarrito, eliminarProductoCarrito, vaciarCarrito, cantidadProductosCarrito, sumaProductosCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito}}>
+    return <EcommerceContext.Provider value={{loading, productos, carrito, agregarProductoContext, editarProductoContext, eliminarProductoContext, agregarProductoAlCarrito, eliminarProductoCarrito, vaciarCarrito, cantidadProductosCarrito, sumaProductosCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito}}>
         {children}
     </EcommerceContext.Provider>
 }

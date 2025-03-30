@@ -1,10 +1,8 @@
 import { useContext, useEffect, useState } from "react"
-import productosJson from "../assets/productos.json"
 import { EcommerceContext } from "./context/EcommerceContext";
 
 const Alta = () => {
-    const {obtenerProductos, agregarProductoContext, editarProductoContext, eliminarProductoContext} = useContext(EcommerceContext);
-    const [productos, setProductos] = useState(obtenerProductos());
+    const {productos, agregarProductoContext, editarProductoContext, eliminarProductoContext} = useContext(EcommerceContext);
     const [nombre, setNombre] = useState("Remera GB Evolution Negra");
     const [precio, setPrecio] = useState(29990);
     const [stock, setStock] = useState(20);
@@ -103,7 +101,6 @@ const Alta = () => {
     useEffect(() => {
         validarProductos();
         validarForm();
-        setProductos(obtenerProductos());
     })
 
     return (
