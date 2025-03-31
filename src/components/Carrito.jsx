@@ -1,9 +1,8 @@
 import { useContext, useState } from "react"
 import { EcommerceContext } from "./context/EcommerceContext";
-import mockAPI from "./mockAPI";
 
 const CarritoDeCompras = () => {
-    const {carrito, eliminarProductoCarrito, cantidadProductosCarrito, sumaProductosCarrito, vaciarCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito} = useContext(EcommerceContext);
+    const {carrito, eliminarProductoCarrito, cantidadProductosCarrito, sumaProductosCarrito, vaciarCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito, guardarPedidoContext} = useContext(EcommerceContext);
     const [idPedido, setIdPedido] = useState(0);
 
     if (idPedido > 0) {
@@ -35,8 +34,7 @@ const CarritoDeCompras = () => {
         const fechaActual = new Date();
         const fecha = `${fechaActual.getDate()}-${fechaActual.getMonth() + 1}-${fechaActual.getFullYear()} ${fechaActual.getHours()}:${fechaActual.getMinutes()}`; 
         const pedido = {items:items, total:sumaProductosCarrito(), fecha:fecha};
-        const response = await mockAPI.post("/pedidos", pedido);
-        setIdPedido(response.data.id);
+        setIdPedido(await guardarPedidoContext(pedido));
         vaciarCarrito();
     }
 

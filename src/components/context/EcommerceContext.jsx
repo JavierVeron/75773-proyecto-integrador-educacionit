@@ -99,7 +99,13 @@ const EcommerceContextProvider = ({children}) => {
         }
     }
 
-    return <EcommerceContext.Provider value={{loading, productos, carrito, agregarProductoContext, editarProductoContext, eliminarProductoContext, agregarProductoAlCarrito, eliminarProductoCarrito, vaciarCarrito, cantidadProductosCarrito, sumaProductosCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito}}>
+    const guardarPedidoContext = async (pedido) => {
+        const response = await mockAPI.post("/pedidos", pedido);
+
+        return response.data.id;
+    }
+
+    return <EcommerceContext.Provider value={{loading, productos, carrito, agregarProductoContext, editarProductoContext, eliminarProductoContext, agregarProductoAlCarrito, eliminarProductoCarrito, vaciarCarrito, cantidadProductosCarrito, sumaProductosCarrito, incrementarItemProductoCarrito, decrementarItemProductoCarrito, guardarPedidoContext}}>
         {children}
     </EcommerceContext.Provider>
 }
