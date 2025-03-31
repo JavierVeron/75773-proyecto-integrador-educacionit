@@ -9,21 +9,23 @@ const EcommerceContextProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        (async () => {
-            const response = await mockAPI.get("/productos");            
-            setProductos(response.data);
-            setLoading(false);
-        })();
-    }, [])
+        obtenerProductos();
+    }, []);
 
-    const agregarProductoContext = (producto) => {
-        const id = generarId();
-        producto = {id:id, ...producto};
-        setProductos([...productos, producto]);
+    const obtenerProductos = async () => {
+        const response = await mockAPI.get("/productos");            
+        setProductos(response.data);
+        setLoading(false);
+    }
+
+    const agregarProductoContext = async (producto) => {
+        const response = await mockAPI.post("/productos", producto);
+        const id = response.data.id;
+        await obtenerProductos();
         console.log("El Producto #" + id + " se guardó correctamente!");
     }
 
-    const editarProductoContext = (id, producto) => {
+    const editarProductoContext = async (id, producto) => {
         const productoEditado = productos.find(item => item.id == id);
         productoEditado.nombre = producto.nombre;
         productoEditado.precio = producto.precio;
@@ -33,13 +35,14 @@ const EcommerceContextProvider = ({children}) => {
         productoEditado.detalles = producto.detalles;
         productoEditado.foto = producto.foto;
         productoEditado.envio = producto.envio;
-        setProductos([...productos]);
+        await mockAPI.put("/productos/" + id, producto);
+        await obtenerProductos();
         console.log("El Producto #" + id + " se modificó correctamente!");
     }
 
-    const eliminarProductoContext = (id) => {
-        const productosActualizados = productos.filter(item => item.id != id);
-        setProductos([...productosActualizados]);
+    const eliminarProductoContext = async (id) => {
+        await mockAPI.delete("/productos/" + id);
+        await obtenerProductos();
         console.log("El Producto #" + id + " se eliminó correctamente!");
     }
 
