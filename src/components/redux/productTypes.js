@@ -1,0 +1,3 @@
+export const ADD_PRODUCT_TYPE = "ADD_PRODUCT";
+export const EDIT_PRODUCT_TYPE = "EDIT_PRODUCT";
+export const DELETE_PRODUCT_TYPE = "DELETE_PRODUCT";

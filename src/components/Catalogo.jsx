@@ -1,23 +1,16 @@
 import { useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { EcommerceContext } from "./context/EcommerceContext";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux"
 import Card from "./Card";
-import Loading from "./Loading";
 
 const Catalogo = () => {
-    const {loading, productos} = useContext(EcommerceContext);
+    const productos = useSelector(state => state.products);
     const [productosFiltro, setProductosFiltro] = useState([]);
     const {id} = useParams();
 
-    useEffect(() => {
-        setProductosFiltro(id ? productos.filter(item => item.categoria == id) : productos);
-    }, [productos, id])
-
-    if (loading) {
-        return (
-            <Loading />
-        )
-    }
+    productos.then(resultado => {
+        setProductosFiltro(id ? resultado.filter(item => item.categoria == id) : resultado);        
+    })
 
     return (
         <div className="container">

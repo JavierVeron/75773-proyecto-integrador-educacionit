@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 import { EcommerceContext } from "./context/EcommerceContext"
 
 const NavBar = () => {
-    const {cantidadProductosCarrito} = useContext(EcommerceContext);
+    //const {cantidadProductosCarrito} = useContext(EcommerceContext);
+    const cantidadProductosCarrito = 0;
 
     return (
         <ul className="nav">
@@ -23,7 +24,7 @@ const NavBar = () => {
                 <Link to={"/alta"} className="nav-link text-dark text-uppercase fw-light">Alta</Link>
             </li>
             <li className="nav-item">
-                <Link to={"/carrito"} className="nav-link text-dark text-uppercase fw-light">Carrito ({cantidadProductosCarrito()})</Link>
+                <Link to={"/carrito"} className="nav-link text-dark text-uppercase fw-light">Carrito ({cantidadProductosCarrito})</Link>
             </li>
         </ul>
     )

@@ -1,8 +1,11 @@
-import { useContext } from "react";
-import { EcommerceContext } from "./context/EcommerceContext";
+import { useDispatch } from "react-redux"
+import { ADD_PRODUCT_TO_CART_ACTION } from "./redux/cartActions";
 
 const Card = ({producto}) => {
-    const {agregarProductoAlCarrito} = useContext(EcommerceContext);
+    const dispatch = useDispatch();
+    const agregarProductoAlCarrito = (id) => {        
+        dispatch(ADD_PRODUCT_TO_CART_ACTION(id));
+    }
 
     return (
         <div className="card mb-4 border-0">
@@ -12,7 +15,7 @@ const Card = ({producto}) => {
                 <p className="card-text text-danger">${producto.precio}</p>
                 <p className="card-text">Stock: <b>{producto.stock}</b></p>
                 {/* <p className={`${producto.envio ? "card-text text-danger fw-light" : ""}`}>{producto.envio ? "ENVÍO GRATIS" : ""}</p> */}
-                <p><button className="btn btn-dark btn-sm" onClick={() => {agregarProductoAlCarrito(producto.id)}}>Agregar al Carrito</button></p>
+                <p><button className="btn btn-dark btn-sm" onClick={() => {agregarProductoAlCarrito(producto.id)}} >Agregar al Carrito</button></p>
             </div>
         </div>
     )

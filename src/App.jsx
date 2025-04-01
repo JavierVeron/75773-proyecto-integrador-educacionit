@@ -4,12 +4,12 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Carrito from "./components/Carrito"
 import Alta from "./components/Alta"
-import EcommerceContextProvider from "./components/context/EcommerceContext"
+import ModalContextProvider from "./components/context/ModalContext"
 
 function App() {
   return (
     <>
-      <EcommerceContextProvider>
+      <ModalContextProvider>
         <BrowserRouter>
           <Header />
           <Routes>
@@ -20,7 +20,7 @@ function App() {
           </Routes>
           <Footer />
         </BrowserRouter>
-      </EcommerceContextProvider>
+      </ModalContextProvider>
     </>
   )
 }
